@@ -38,25 +38,33 @@
     port: number;
   };
 
-  let proxyEditors = $state<Record<string, ProxyEditor>>({});
-  let bypassList = $state('');
+  // Helper to get proxy editor for a scheme from profile
+  function getProxyEditor(scheme: string, prof: Profile): ProxyEditor {
+    const key = scheme || 'fallbackProxy';
+    const proxy = (prof as any)[key === 'fallbackProxy' ? 'fallbackProxy' : `proxyFor${scheme.charAt(0).toUpperCase() + scheme.slice(1)}`] as Proxy | undefined;
+    return {
+      scheme: proxy?.scheme || (scheme === '' ? 'http' : ''),
+      host: proxy?.host || '',
+      port: proxy?.port || (scheme === '' ? 8080 : 0),
+    };
+  }
+
+  // Initialize with default values immediately to avoid undefined access
+  let proxyEditors = $state<Record<string, ProxyEditor>>({
+    '': getProxyEditor('', profile),
+    'http': getProxyEditor('http', profile),
+    'https': getProxyEditor('https', profile),
+    'ftp': getProxyEditor('ftp', profile),
+  });
+  let bypassList = $state(((profile as any).bypassList || []).join('\n'));
   let showAdvanced = $state(false);
 
-  // Initialize from profile
+  // Re-initialize when profile changes
   $effect(() => {
     const editors: Record<string, ProxyEditor> = {};
-    
     for (const scheme of urlSchemes) {
-      const key = scheme || 'fallbackProxy';
-      const proxy = (profile as any)[key === 'fallbackProxy' ? 'fallbackProxy' : `proxyFor${scheme.charAt(0).toUpperCase() + scheme.slice(1)}`] as Proxy | undefined;
-      
-      editors[scheme] = {
-        scheme: proxy?.scheme || (scheme === '' ? 'http' : ''),
-        host: proxy?.host || '',
-        port: proxy?.port || (scheme === '' ? 8080 : 0),
-      };
+      editors[scheme] = getProxyEditor(scheme, profile);
     }
-    
     proxyEditors = editors;
     bypassList = ((profile as any).bypassList || []).join('\n');
   });
