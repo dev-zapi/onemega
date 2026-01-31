@@ -83,9 +83,9 @@
   const allProfiles = $derived([...builtinProfiles, ...profiles]);
 </script>
 
-<div class="w-72 bg-white dark:bg-gray-900">
+<div class="w-72 glass dark:glass-dark rounded-xl overflow-hidden">
   <!-- Header -->
-  <div class="flex items-center justify-between px-4 py-3 border-b dark:border-gray-700">
+  <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200/50 dark:border-gray-700/50">
     <div class="flex items-center gap-2">
       <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
@@ -93,7 +93,7 @@
       <h1 class="font-semibold text-gray-900 dark:text-white">{t('appNameShort')}</h1>
     </div>
     <button
-      class="p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+      class="p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-500/10 rounded-lg transition-smooth"
       onclick={openOptions}
       title={t('popup_openOptions')}
     >
@@ -112,10 +112,10 @@
     {:else}
       {#each allProfiles as profile}
         <button
-          class="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors {currentProfileName === profile.name ? 'bg-blue-50 dark:bg-blue-900/30' : ''}"
+          class="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-500/10 transition-smooth {currentProfileName === profile.name ? 'bg-blue-500/10' : ''}"
           onclick={() => selectProfile(profile.name)}
         >
-          <div class="w-8 h-8 rounded-full {typeColors[profile.profileType] || 'bg-gray-500'} flex items-center justify-center">
+          <div class="w-8 h-8 rounded-lg {typeColors[profile.profileType] || 'bg-gray-500'} flex items-center justify-center shadow-soft">
             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPaths[profile.profileType] || iconPaths.FixedProfile} />
             </svg>
@@ -140,7 +140,7 @@
   </div>
 
   <!-- Footer -->
-  <div class="px-4 py-2 border-t dark:border-gray-700 text-xs text-gray-400 dark:text-gray-500 text-center">
+  <div class="px-4 py-2 border-t border-gray-200/50 dark:border-gray-700/50 text-xs text-gray-400 dark:text-gray-500 text-center">
     {t('popup_currentProfile')}: {currentProfileName}
   </div>
 </div>

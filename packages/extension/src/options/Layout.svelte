@@ -39,12 +39,12 @@
   }
 </script>
 
-<div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+<div class="flex h-screen bg-gray-100/50 dark:bg-gray-900">
   <!-- Sidebar -->
-  <aside class="w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 flex flex-col">
+  <aside class="w-64 glass dark:glass-dark flex flex-col">
     <!-- Logo -->
-    <div class="p-4 border-b dark:border-gray-700">
-      <h1 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+    <div class="p-4 border-b border-gray-200/50 dark:border-gray-700/50">
+      <h1 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
         </svg>
@@ -57,7 +57,7 @@
       {#each navItems as item}
         <button
           type="button"
-          class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors {currentPage === item.id ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'}"
+          class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-smooth {currentPage === item.id ? 'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400' : 'text-gray-600 hover:bg-gray-500/10 dark:text-gray-400 dark:hover:bg-gray-500/10'}"
           onclick={() => navigate(item.id)}
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,15 +69,15 @@
     </nav>
 
     <!-- Profiles list -->
-    <div class="p-4 border-t dark:border-gray-700">
+    <div class="p-4 border-t border-gray-200/50 dark:border-gray-700/50">
       <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
         Profiles
       </h3>
-      <div class="space-y-1 max-h-48 overflow-y-auto">
+      <div class="space-y-0.5 max-h-48 overflow-y-auto">
         {#each optionsStore.sortedProfiles as profile}
           <button
             type="button"
-            class="w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm text-left text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+            class="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-left text-gray-600 hover:bg-gray-500/10 dark:text-gray-400 dark:hover:bg-gray-500/10 transition-smooth"
             onclick={() => navigate(`profile:${profile.name}`)}
           >
             <span class="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -98,8 +98,8 @@
   <main class="flex-1 flex flex-col overflow-hidden">
     <!-- Top bar with actions -->
     {#if optionsStore.isDirty}
-      <div class="bg-yellow-50 dark:bg-yellow-900/20 border-b border-yellow-200 dark:border-yellow-800 px-6 py-3 flex items-center justify-between">
-        <span class="text-sm text-yellow-800 dark:text-yellow-200">
+      <div class="bg-amber-500/10 border-b border-amber-500/20 px-6 py-3 flex items-center justify-between">
+        <span class="text-sm text-amber-700 dark:text-amber-300">
           You have unsaved changes
         </span>
         <div class="flex gap-2">
