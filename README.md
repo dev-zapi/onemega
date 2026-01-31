@@ -89,6 +89,15 @@ Help translate SwitchyAlpha on [Weblate](https://hosted.weblate.org/engage/switc
 
 [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0)
 
+## 🙏 Acknowledgments
+
+This project is a modern rewrite based on:
+
+- [ZeroOmega](https://github.com/zero-peak/ZeroOmega) by zero-peak
+- [SwitchyOmega](https://github.com/FelisCatus/SwitchyOmega) by FelisCatus
+
+Thank you for your outstanding work and contributions to the open source community! 💖
+
 ---
 
 <details>
@@ -111,6 +120,15 @@ SwitchyAlpha 是一款现代化的浏览器代理管理扩展，支持 Chrome、
 pnpm install
 cd packages/extension && pnpm build
 ```
+
+### 致谢
+
+本项目基于以下项目重写：
+
+- [ZeroOmega](https://github.com/zero-peak/ZeroOmega) by zero-peak
+- [SwitchyOmega](https://github.com/FelisCatus/SwitchyOmega) by FelisCatus
+
+感谢他们对开源社区的杰出贡献！💖
 
 ### 声明
 
