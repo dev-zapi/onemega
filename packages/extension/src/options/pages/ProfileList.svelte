@@ -3,7 +3,7 @@
   import optionsStore from '$lib/stores/options.svelte';
   import ProfileIcon from '$components/ProfileIcon.svelte';
   import Button from '$components/ui/Button.svelte';
-  import type { Profile } from '@anthropic-demo/onemega-pac';
+  import type { Profile } from '@anthropic-demo/switchyalpha-pac';
 
   interface Props {
     onedit?: (profile: Profile) => void;

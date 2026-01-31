@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { Profile } from '@anthropic-demo/onemega-pac';
+  import type { Profile } from '@anthropic-demo/switchyalpha-pac';
   import { t } from '$lib/i18n';
 
   // Built-in profiles

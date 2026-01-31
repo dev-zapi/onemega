@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "ZeroOmega",
+  "name": "SwitchyAlpha",
   "version": "4.0.0",
   "description": "Manage and switch between multiple proxies quickly & easily.",
   "action": {
-    "default_title": "ZeroOmega",
+    "default_title": "SwitchyAlpha",
     "default_popup": "src/popup/index.html"
   },
   "background": {

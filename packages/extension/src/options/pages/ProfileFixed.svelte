@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Profile, Proxy } from '@anthropic-demo/onemega-pac';
+  import type { Profile, Proxy } from '@anthropic-demo/switchyalpha-pac';
   import { t } from '$lib/i18n';
   import optionsStore from '$lib/stores/options.svelte';
   import Button from '$components/ui/Button.svelte';

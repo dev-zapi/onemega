@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Profile } from '@anthropic-demo/onemega-pac';
+  import type { Profile } from '@anthropic-demo/switchyalpha-pac';
   import { t } from '$lib/i18n';
 
   interface Props {

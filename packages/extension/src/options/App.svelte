@@ -9,7 +9,7 @@
   import ProfileFixed from './pages/ProfileFixed.svelte';
   import ProfileSwitch from './pages/ProfileSwitch.svelte';
   import optionsStore from '$lib/stores/options.svelte';
-  import type { Profile, FixedProfile, SwitchProfile } from '@anthropic-demo/onemega-pac';
+  import type { Profile, FixedProfile, SwitchProfile } from '@anthropic-demo/switchyalpha-pac';
 
   let currentPage = $state('profiles');
   let editingProfile = $state<Profile | null>(null);

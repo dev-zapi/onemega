@@ -1,5 +1,5 @@
 {
-  "name": "@anthropic-demo/onemega-extension",
+  "name": "@anthropic-demo/switchyalpha-extension",
   "version": "4.0.0-alpha.0",
   "private": true,
   "type": "module",
@@ -9,8 +9,8 @@
     "typecheck": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@anthropic-demo/onemega-core": "workspace:*",
-    "@anthropic-demo/onemega-pac": "workspace:*",
+    "@anthropic-demo/switchyalpha-core": "workspace:*",
+    "@anthropic-demo/switchyalpha-pac": "workspace:*",
     "@crxjs/vite-plugin": "^2.0.0-beta.25",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tailwindcss/vite": "^4.0.0",

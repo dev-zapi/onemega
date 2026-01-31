@@ -1,11 +1,11 @@
 <div align="center">
 
-# 🌐 ZeroOmega
+# 🌐 SwitchyAlpha
 
 **A modern proxy management browser extension**
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Install-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/pfnededegaaopdmhkdmcofjmoldfiped)
-[![Firefox Add-on](https://img.shields.io/badge/Firefox-Install-FF7139?logo=firefox&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/zeroomega/)
+[![Firefox Add-on](https://img.shields.io/badge/Firefox-Install-FF7139?logo=firefox&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/switchyalpha/)
 [![Edge Add-on](https://img.shields.io/badge/Edge-Install-0078D7?logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/dmaldhchmoaaopdmhkdmcofjmoldfiped)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Translation](https://hosted.weblate.org/widgets/switchyomega/-/svg-badge.svg)](https://hosted.weblate.org/engage/switchyomega/)
@@ -29,10 +29,10 @@
 | Browser | Link |
 |---------|------|
 | Chrome | [Chrome Web Store](https://chromewebstore.google.com/detail/pfnededegaaopdmhkdmcofjmoldfiped) |
-| Firefox | [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/zeroomega/) |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/switchyalpha/) |
 | Edge | [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/dmaldhchmoaaopdmhkdmcofjmoldfiped) |
 
-Or download from [Releases](https://github.com/zero-peak/ZeroOmega/releases) for manual installation.
+Or download from [Releases](https://github.com/nicholascao/SwitchyAlpha/releases) for manual installation.
 
 ## 🛠️ Development
 
@@ -81,7 +81,7 @@ packages/
 
 ## 🌍 Translation
 
-Help translate ZeroOmega on [Weblate](https://hosted.weblate.org/engage/switchyomega/).
+Help translate SwitchyAlpha on [Weblate](https://hosted.weblate.org/engage/switchyomega/).
 
 [![Translation Status](https://hosted.weblate.org/widgets/switchyomega/-/287x66-white.png)](https://hosted.weblate.org/engage/switchyomega/)
 
@@ -96,7 +96,7 @@ Help translate ZeroOmega on [Weblate](https://hosted.weblate.org/engage/switchyo
 
 ### 简介
 
-ZeroOmega 是一款现代化的浏览器代理管理扩展，支持 Chrome、Firefox 和 Edge。
+SwitchyAlpha 是一款现代化的浏览器代理管理扩展，支持 Chrome、Firefox 和 Edge。
 
 ### 功能
 
@@ -114,6 +114,6 @@ cd packages/extension && pnpm build
 
 ### 声明
 
-ZeroOmega 是独立开源项目，未与任何代理/VPN提供商合作。
+SwitchyAlpha 是独立开源项目，未与任何代理/VPN提供商合作。
 
 </details>

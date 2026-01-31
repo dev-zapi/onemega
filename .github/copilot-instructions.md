@@ -1,8 +1,8 @@
-# Copilot Instructions for ZeroOmega
+# Copilot Instructions for SwitchyAlpha
 
 ## Overview
 
-ZeroOmega is a modern browser extension for proxy management. Built with TypeScript, Svelte 5, and Vite.
+SwitchyAlpha is a modern browser extension for proxy management. Built with TypeScript, Svelte 5, and Vite.
 
 ## Quick Reference
 

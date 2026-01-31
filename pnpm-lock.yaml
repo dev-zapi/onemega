@@ -8,7 +8,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@anthropic-demo/onemega-pac':
+      '@anthropic-demo/switchyalpha-pac':
         specifier: workspace:*
         version: link:../pac
     devDependencies:
@@ -21,10 +21,10 @@ importers:
 
   packages/extension:
     devDependencies:
-      '@anthropic-demo/onemega-core':
+      '@anthropic-demo/switchyalpha-core':
         specifier: workspace:*
         version: link:../core
-      '@anthropic-demo/onemega-pac':
+      '@anthropic-demo/switchyalpha-pac':
         specifier: workspace:*
         version: link:../pac
       '@crxjs/vite-plugin':

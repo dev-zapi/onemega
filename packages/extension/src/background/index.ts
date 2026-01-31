@@ -1,5 +1,5 @@
 // Background service worker for ZeroOmega
-import { Profiles, type Profile, type OmegaOptions } from '@anthropic-demo/onemega-pac';
+import { Profiles, type Profile, type OmegaOptions } from '@anthropic-demo/switchyalpha-pac';
 
 console.log('ZeroOmega background service worker started');
 

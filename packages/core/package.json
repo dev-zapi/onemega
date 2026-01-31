@@ -1,5 +1,5 @@
 {
-  "name": "@anthropic-demo/onemega-core",
+  "name": "@anthropic-demo/switchyalpha-core",
   "version": "4.0.0-alpha.0",
   "private": true,
   "type": "module",
@@ -23,6 +23,6 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
-    "@anthropic-demo/onemega-pac": "workspace:*"
+    "@anthropic-demo/switchyalpha-pac": "workspace:*"
   }
 }

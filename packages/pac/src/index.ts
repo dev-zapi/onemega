@@ -1,5 +1,5 @@
 /**
- * @anthropic-demo/onemega-pac
+ * @anthropic-demo/switchyalpha-pac
  *
  * PAC (Proxy Auto-Config) generation module for ZeroOmega.
  * Handles profile model and compiles profiles into PAC scripts.

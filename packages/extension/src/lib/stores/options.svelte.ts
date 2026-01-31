@@ -4,8 +4,8 @@
  * Svelte 5 reactive store using runes pattern for managing extension options.
  */
 
-import type { Profile, OmegaOptions } from '@anthropic-demo/onemega-pac';
-import { Profiles } from '@anthropic-demo/onemega-pac';
+import type { Profile, OmegaOptions } from '@anthropic-demo/switchyalpha-pac';
+import { Profiles } from '@anthropic-demo/switchyalpha-pac';
 
 // Store state
 let options = $state<OmegaOptions | null>(null);

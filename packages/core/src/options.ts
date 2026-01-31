@@ -5,7 +5,7 @@
  * This is a simplified TypeScript port of the original Options class.
  */
 
-import { Profiles, type Profile, type OmegaOptions } from '@anthropic-demo/onemega-pac';
+import { Profiles, type Profile, type OmegaOptions } from '@anthropic-demo/switchyalpha-pac';
 import { Storage } from './storage';
 import { Log } from './log';
 import { ProfileNotExistError, NoOptionsError } from './errors';
