@@ -1,161 +1,119 @@
-ZeroOmega, forked from SwitchyOmega compatible with manifest v3
-============
+<div align="center">
 
-[Chrome Web Store](https://chromewebstore.google.com/detail/pfnededegaaopdmhkdmcofjmoldfiped)
+# 🌐 ZeroOmega
 
-[Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/zeroomegaproxy-switchy-/dmaldhchmoaaopdmhkdmcofjmoldfiped)
+**A modern proxy management browser extension**
 
-[Firefox Addon](https://addons.mozilla.org/en-US/firefox/addon/zeroomega/)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Install-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/pfnededegaaopdmhkdmcofjmoldfiped)
+[![Firefox Add-on](https://img.shields.io/badge/Firefox-Install-FF7139?logo=firefox&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/zeroomega/)
+[![Edge Add-on](https://img.shields.io/badge/Edge-Install-0078D7?logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/dmaldhchmoaaopdmhkdmcofjmoldfiped)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Translation](https://hosted.weblate.org/widgets/switchyomega/-/svg-badge.svg)](https://hosted.weblate.org/engage/switchyomega/)
 
-Manage and switch between multiple proxies quickly & easily.
+*Manage and switch between multiple proxies quickly & easily.*
 
-[![Translation status](https://hosted.weblate.org/widgets/switchyomega/-/svg-badge.svg)](https://hosted.weblate.org/engage/switchyomega/?utm_source=widget)
+</div>
 
-## Tech Stack (v4.0+)
+---
+
+## ✨ Features
+
+- 🔄 **Quick Switch** - Change proxy with one click from popup
+- 📋 **Multiple Profiles** - Direct, System, Fixed Proxy, PAC Script, Auto Switch
+- 🎯 **Smart Rules** - Auto-switch based on URL patterns, domains, or wildcards
+- 📦 **Import/Export** - Backup and restore your configurations
+- 🌍 **Cross-Browser** - Works on Chrome, Firefox, and Edge
+
+## 📥 Installation
+
+| Browser | Link |
+|---------|------|
+| Chrome | [Chrome Web Store](https://chromewebstore.google.com/detail/pfnededegaaopdmhkdmcofjmoldfiped) |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/zeroomega/) |
+| Edge | [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/dmaldhchmoaaopdmhkdmcofjmoldfiped) |
+
+Or download from [Releases](https://github.com/zero-peak/ZeroOmega/releases) for manual installation.
+
+## 🛠️ Development
+
+### Tech Stack
 
 | Category | Technology |
-|----------|-----------|
+|----------|------------|
 | Language | TypeScript |
-| UI Framework | Svelte 5 |
-| Build Tool | Vite |
+| UI | Svelte 5 |
+| Build | Vite |
 | CSS | Tailwind CSS v4 |
 | Testing | Vitest |
 | Package Manager | pnpm |
 
-## Project Structure
-
-```
-onemega/
-├── packages/
-│   ├── pac/          # @onemega/pac - PAC script generation
-│   ├── core/         # @onemega/core - Options management
-│   └── extension/    # Browser extension (Chrome/Firefox)
-├── omega-*/          # Legacy modules (deprecated)
-├── pnpm-workspace.yaml
-└── tsconfig.base.json
-```
-
-## Development
-
-### Prerequisites
-
-- Node.js 20+
-- pnpm 9+
-
-### Setup
+### Quick Start
 
 ```bash
 # Install dependencies
 pnpm install
 
+# Build extension
+cd packages/extension && pnpm build
+
 # Run tests
 pnpm -r test
 
-# Build extension
-cd packages/extension
-pnpm build
-
-# Development mode (watch)
+# Development mode
 pnpm dev
 ```
 
-### Loading the Extension
+### Project Structure
 
-After building, load the extension from `packages/extension/dist/chrome/` as an unpacked extension in Chrome.
-
-## Legacy Build (v3.x)
-
-The legacy build system using Grunt/Bower is still available in the `omega-build/` directory:
-
-```bash
-cd omega-build
-npm run deps
-npm run build
+```
+packages/
+├── pac/          # PAC script generation library
+├── core/         # Options management library
+└── extension/    # Browser extension (Svelte 5 UI)
 ```
 
-Chromium Extension
-------------------
-The project is available as a Chromium Extension.
+### Load Extension
 
-You can try it on [Chrome Web Store](https://chromewebstore.google.com/detail/pfnededegaaopdmhkdmcofjmoldfiped),
-or grab a packaged extension file (CRX) for offline installation on the [Releases page](https://github.com/zero-peak/ZeroOmega/releases).
+1. Build: `cd packages/extension && pnpm build`
+2. Open Chrome → `chrome://extensions`
+3. Enable "Developer mode"
+4. Click "Load unpacked" → Select `packages/extension/dist/chrome`
 
-Please [report issues on the issue tracker](https://github.com/zero-peak/ZeroOmega/issues).
+## 🌍 Translation
 
-Firefox Addon
-----------------------------
+Help translate ZeroOmega on [Weblate](https://hosted.weblate.org/engage/switchyomega/).
 
-There is also a WebExtension port, which allows installing in Firefox. Compatibility with Firefox has increased significantly recently.
+[![Translation Status](https://hosted.weblate.org/widgets/switchyomega/-/287x66-white.png)](https://hosted.weblate.org/engage/switchyomega/)
 
-You can try it on [Mozilla Add-ons](https://addons.mozilla.org/en-US/firefox/addon/zeroomega/),
-or grab a packaged extension file (XPI) for offline installation on the [Releases page](https://github.com/zero-peak/ZeroOmega/releases).
+## 📄 License
 
-Please [report issues on the issue tracker](https://github.com/zero-peak/ZeroOmega/issues), browser-specific bugs are possible.
+[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0)
 
-## Architecture
+---
 
-### @onemega/pac
-PAC generating module that handles profiles and compiles them into PAC scripts.
+<details>
+<summary>中文说明</summary>
 
-- **profiles.ts** - Profile management and matching
-- **conditions.ts** - 12 condition types for URL matching
-- **rule-list.ts** - Rule list parsing (AutoProxy, Switchy formats)
+### 简介
 
-### @onemega/core
-Browser-independent options management.
+ZeroOmega 是一款现代化的浏览器代理管理扩展，支持 Chrome、Firefox 和 Edge。
 
-- **options.ts** - CRUD operations for profiles and settings
-- **storage.ts** - Abstract storage interface
-- **browser-storage.ts** - Chrome storage implementation
+### 功能
 
-### @onemega/extension
-Browser extension with Svelte 5 UI.
+- 快速切换代理配置
+- 多种代理模式：直连、系统代理、固定代理、PAC 脚本、自动切换
+- 基于 URL 规则的智能切换
+- 配置导入/导出
 
-- **background/** - Service worker for proxy control
-- **popup/** - Quick profile switching popup
-- **options/** - Full configuration interface
+### 开发
 
-## Translation
+```bash
+pnpm install
+cd packages/extension && pnpm build
+```
 
-Translation is hosted on Weblate. If you want to help improve the translated
-text or start translation for your language, please follow the link of the picture
-below.
+### 声明
 
-本项目翻译由Weblate托管。如果您希望帮助改进翻译，或将本项目翻译成一种新的语言，请
-点击下方图片链接进入翻译。
+ZeroOmega 是独立开源项目，未与任何代理/VPN提供商合作。
 
-[![Translation status](https://hosted.weblate.org/widgets/switchyomega/-/287x66-white.png)](https://hosted.weblate.org/engage/switchyomega/?utm_source=widget)
-
-License
--------
-![GPLv3](https://www.gnu.org/graphics/gplv3-127x51.png)
-
-ZeroOmega is licensed under [GNU General Public License](https://www.gnu.org/licenses/gpl.html) Version 3 or later.
-
-ZeroOmega is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-ZeroOmega is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with ZeroOmega.  If not, see <http://www.gnu.org/licenses/>.
-
-Notice
-------
-
-
-ZeroOmega currently does not have a dedicated project homepage. Please refer to this Github repository and wiki for official information.
-
-ZeroOmega is not cooperating with any proxy providers, VPN providers or ISPs at the moment. No advertisement is displayed in ZeroOmega project or software. Proxy providers are welcome to recommend ZeroOmega as part of the solution in tutorials, but it must be made clear that ZeroOmega is an independent project, is not affiliated with the provider and therefore cannot provide any support on network connections or proxy technology.
-
-重要声明
---------
-
-ZeroOmega 目前没有专门的项目主页。一切信息请以 Github 上的项目和 wiki 为准。
-
-ZeroOmega 目前未与任何代理提供商、VPN提供商或 ISP 达成任何合作协议，项目或软件中不包含任何此类广告。欢迎代理提供商在教程或说明中推荐 ZeroOmega ，但请明确说明此软件是独立项目，与代理提供商无关，且不提供任何关于网络连接或代理技术的支持。
+</details>
