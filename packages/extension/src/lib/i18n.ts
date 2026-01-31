@@ -1,5 +1,5 @@
 /**
- * Simple i18n module for ZeroOmega
+ * Simple i18n module for SwitchyAlpha
  *
  * Loads translations from Chrome extension API or provides fallback.
  */
@@ -9,8 +9,8 @@ export type TranslationParams = Record<string, string | number> | (string | numb
 
 // Fallback translations (English)
 const fallbackMessages: Record<string, string> = {
-  appNameShort: 'ZeroOmega',
-  manifest_app_name: 'ZeroOmega',
+  appNameShort: 'SwitchyAlpha',
+  manifest_app_name: 'SwitchyAlpha',
   manifest_app_description: 'Manage and switch between multiple proxies quickly & easily.',
 
   // Profile types
@@ -37,7 +37,7 @@ const fallbackMessages: Record<string, string> = {
   condition_FalseCondition: 'Never',
 
   // Options page
-  options_title: 'ZeroOmega Options',
+  options_title: 'SwitchyAlpha Options',
   options_group_proxyServers: 'Proxy servers',
   options_group_bypassList: 'Bypass List',
   options_group_switchRules: 'Switch rules',
@@ -122,7 +122,7 @@ const fallbackMessages: Record<string, string> = {
   options_makeBackup: 'Download backup',
 
   // About
-  about_title: 'About ZeroOmega',
+  about_title: 'About SwitchyAlpha',
   about_version: 'Version',
   about_description: 'A modern proxy switcher for your browser.',
 
