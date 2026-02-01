@@ -2,9 +2,6 @@
   import type { Profile, Proxy } from '@anthropic-demo/switchyalpha-pac';
   import { t } from '$lib/i18n';
   import optionsStore from '$lib/stores/options.svelte';
-  import Button from '$components/ui/Button.svelte';
-  import Input from '$components/ui/Input.svelte';
-  import Select from '$components/ui/Select.svelte';
 
   interface Props {
     profile: Profile;
@@ -66,7 +63,12 @@
       editors[scheme] = getProxyEditor(scheme, profile);
     }
     proxyEditors = editors;
-    bypassList = ((profile as any).bypassList || []).join('\n');
+    // bypassList is an array of Condition objects with pattern property
+    const conditions = (profile as any).bypassList || [];
+    bypassList = conditions
+      .map((c: any) => c.pattern || '')
+      .filter((p: string) => p.length > 0)
+      .join('\n');
   });
 
   function handleProxyChange(scheme: string) {
@@ -90,12 +92,16 @@
   }
 
   function handleBypassChange() {
-    const list = bypassList
+    const patterns = bypassList
       .split('\n')
       .map(line => line.trim())
       .filter(line => line.length > 0);
     
-    (profile as any).bypassList = list;
+    // Convert patterns back to BypassCondition objects
+    (profile as any).bypassList = patterns.map(pattern => ({
+      conditionType: 'BypassCondition',
+      pattern,
+    }));
     optionsStore.setProfile(profile);
   }
 
@@ -147,6 +153,8 @@
           <tbody class="divide-y dark:divide-gray-700">
             {#each urlSchemes as scheme}
               {#if scheme === '' || showAdvanced}
+                {@const editor = proxyEditors[scheme]}
+                {#if editor}
                 <tr>
                   <td class="py-3 pr-4">
                     <span class="text-gray-900 dark:text-white font-medium">
@@ -156,7 +164,7 @@
                   <td class="py-3 pr-4">
                     <select
                       class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-                      bind:value={proxyEditors[scheme].scheme}
+                      bind:value={editor.scheme}
                       onchange={() => handleProxyChange(scheme)}
                     >
                       {#each proxyProtocols as proto}
@@ -167,46 +175,47 @@
                     </select>
                   </td>
                   <td class="py-3 pr-4">
-                    {#if proxyEditors[scheme].scheme || scheme === ''}
+                    {#if editor.scheme || scheme === ''}
                       <input
                         type="text"
                         class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-                        bind:value={proxyEditors[scheme].host}
-                        placeholder={scheme === '' ? 'proxy.example.com' : proxyEditors[''].host || ''}
-                        disabled={scheme !== '' && !proxyEditors[scheme].scheme}
+                        bind:value={editor.host}
+                        placeholder={scheme === '' ? 'proxy.example.com' : proxyEditors['']?.host || ''}
+                        disabled={scheme !== '' && !editor.scheme}
                         onchange={() => handleProxyChange(scheme)}
                       />
                     {:else}
                       <input
                         type="text"
                         class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-600 dark:text-gray-400"
-                        placeholder={proxyEditors[''].host || ''}
+                        placeholder={proxyEditors['']?.host || ''}
                         disabled
                       />
                     {/if}
                   </td>
                   <td class="py-3 pr-4">
-                    {#if proxyEditors[scheme].scheme || scheme === ''}
+                    {#if editor.scheme || scheme === ''}
                       <input
                         type="number"
                         class="block w-24 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-                        bind:value={proxyEditors[scheme].port}
+                        bind:value={editor.port}
                         min="1"
                         max="65535"
-                        placeholder={scheme === '' ? '8080' : String(proxyEditors[''].port || '')}
-                        disabled={scheme !== '' && !proxyEditors[scheme].scheme}
+                        placeholder={scheme === '' ? '8080' : String(proxyEditors['']?.port || '')}
+                        disabled={scheme !== '' && !editor.scheme}
                         onchange={() => handleProxyChange(scheme)}
                       />
                     {:else}
                       <input
                         type="number"
                         class="block w-24 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-600 dark:text-gray-400"
-                        placeholder={String(proxyEditors[''].port || '')}
+                        placeholder={String(proxyEditors['']?.port || '')}
                         disabled
                       />
                     {/if}
                   </td>
                 </tr>
+                {/if}
               {/if}
             {/each}
           </tbody>
