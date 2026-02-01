@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import type { Profile } from '@anthropic-demo/switchyalpha-pac';
   import { t } from '$lib/i18n.svelte';
+  import i18nStore from '$lib/i18n.svelte';
+  import themeStore from '$lib/stores/theme.svelte';
 
   // Built-in profiles
   const builtinProfiles: Profile[] = [
@@ -34,6 +36,12 @@
   };
 
   onMount(async () => {
+    // Initialize theme and language
+    await Promise.all([
+      themeStore.init(),
+      i18nStore.init()
+    ]);
+
     try {
       if (typeof chrome !== 'undefined' && chrome.runtime) {
         const response = await chrome.runtime.sendMessage({ action: 'getOptions' });
