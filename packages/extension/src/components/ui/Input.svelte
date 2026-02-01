@@ -10,6 +10,7 @@
     min?: number;
     max?: number;
     class?: string;
+    id?: string;
     oninput?: (e: Event) => void;
     onchange?: (e: Event) => void;
   }
@@ -25,9 +26,14 @@
     min,
     max,
     class: className = '',
+    id,
     oninput,
     onchange,
   }: Props = $props();
+
+  // Generate a unique ID if not provided and label exists
+  const generatedId = `input-${Math.random().toString(36).slice(2, 9)}`;
+  const inputId = $derived(id || (label ? generatedId : undefined));
 
   const baseClasses =
     'block w-full rounded-lg border bg-white/50 dark:bg-gray-800/50 px-3 py-2 text-sm transition-smooth disabled:bg-gray-100/50 disabled:cursor-not-allowed dark:text-gray-100';
@@ -42,7 +48,7 @@
 </script>
 
 {#if label}
-  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+  <label for={inputId} class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
     {label}
     {#if required}<span class="text-red-500 ml-0.5">*</span>{/if}
   </label>
@@ -50,6 +56,7 @@
 
 <input
   {type}
+  id={inputId}
   bind:value
   {placeholder}
   {disabled}

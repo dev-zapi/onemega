@@ -76,10 +76,10 @@
     </div>
 
     <!-- Profile Type -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+    <fieldset>
+      <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
         {t('options_profileType')}
-      </label>
+      </legend>
       <div class="space-y-3">
         {#each profileTypes as type}
           <label class="flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-colors
@@ -104,7 +104,7 @@
           </label>
         {/each}
       </div>
-    </div>
+    </fieldset>
 
     <!-- Actions -->
     <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">

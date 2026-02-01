@@ -49,17 +49,17 @@
     };
   }
 
-  // Initialize with default values immediately to avoid undefined access
+  // Initialize with empty values, will be populated by $effect
   let proxyEditors = $state<Record<string, ProxyEditor>>({
-    '': getProxyEditor('', profile),
-    'http': getProxyEditor('http', profile),
-    'https': getProxyEditor('https', profile),
-    'ftp': getProxyEditor('ftp', profile),
+    '': { scheme: 'http', host: '', port: 8080 },
+    'http': { scheme: '', host: '', port: 0 },
+    'https': { scheme: '', host: '', port: 0 },
+    'ftp': { scheme: '', host: '', port: 0 },
   });
-  let bypassList = $state(((profile as any).bypassList || []).join('\n'));
+  let bypassList = $state('');
   let showAdvanced = $state(false);
 
-  // Re-initialize when profile changes
+  // Initialize and update when profile changes
   $effect(() => {
     const editors: Record<string, ProxyEditor> = {};
     for (const scheme of urlSchemes) {
@@ -111,6 +111,7 @@
       type="button"
       class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
       onclick={handleBack}
+      aria-label="Go back"
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
