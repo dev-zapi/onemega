@@ -1,7 +1,9 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import { onMount } from 'svelte';
   import { t } from '$lib/i18n';
   import optionsStore from '$lib/stores/options.svelte';
+  import themeStore from '$lib/stores/theme.svelte';
   import Button from '$components/ui/Button.svelte';
   import Alert from '$components/ui/Alert.svelte';
 
@@ -26,6 +28,24 @@
     { id: 'about', label: t('nav_about'), icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
   ];
 
+  // Theme icons
+  const themeIcons = {
+    light: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z',
+    dark: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z',
+    system: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+  };
+
+  // Theme labels
+  const themeLabels = {
+    light: t('theme_light') || 'Light',
+    dark: t('theme_dark') || 'Dark',
+    system: t('theme_system') || 'System',
+  };
+
+  onMount(() => {
+    themeStore.init();
+  });
+
   function navigate(page: string) {
     onnavigate?.(page);
   }
@@ -36,6 +56,10 @@
 
   async function handleRevert() {
     await optionsStore.revertChanges();
+  }
+
+  function handleThemeCycle() {
+    themeStore.cycle();
   }
 </script>
 
@@ -91,6 +115,21 @@
         </svg>
         {t('options_newProfile')}
       </Button>
+    </div>
+
+    <!-- Theme switcher -->
+    <div class="p-4 border-t border-gray-200/50 dark:border-gray-700/50">
+      <button
+        type="button"
+        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-500/10 dark:text-gray-400 dark:hover:bg-gray-500/10 transition-smooth"
+        onclick={handleThemeCycle}
+        aria-label="Toggle theme"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={themeIcons[themeStore.mode]} />
+        </svg>
+        {themeLabels[themeStore.mode]}
+      </button>
     </div>
   </aside>
 

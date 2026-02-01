@@ -93,6 +93,8 @@ const fallbackMessages: Record<string, string> = {
   options_apply: 'Apply changes',
   options_revert: 'Revert changes',
   options_newProfile: 'New profile...',
+  options_profileName: 'Profile Name',
+  options_profileType: 'Profile Type',
   options_renameProfile: 'Rename',
   options_deleteProfile: 'Delete',
   options_exportProfile: 'Export PAC',
@@ -101,6 +103,11 @@ const fallbackMessages: Record<string, string> = {
   nav_general: 'General',
   nav_importExport: 'Import/Export',
   nav_about: 'About',
+
+  // Theme
+  theme_light: 'Light',
+  theme_dark: 'Dark',
+  theme_system: 'System',
 
   // General settings
   options_startupProfile: 'Startup Profile',

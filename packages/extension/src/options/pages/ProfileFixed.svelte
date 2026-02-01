@@ -155,7 +155,7 @@
                   </td>
                   <td class="py-3 pr-4">
                     <select
-                      class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                      class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                       bind:value={proxyEditors[scheme].scheme}
                       onchange={() => handleProxyChange(scheme)}
                     >
@@ -170,7 +170,7 @@
                     {#if proxyEditors[scheme].scheme || scheme === ''}
                       <input
                         type="text"
-                        class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                        class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                         bind:value={proxyEditors[scheme].host}
                         placeholder={scheme === '' ? 'proxy.example.com' : proxyEditors[''].host || ''}
                         disabled={scheme !== '' && !proxyEditors[scheme].scheme}
@@ -179,7 +179,7 @@
                     {:else}
                       <input
                         type="text"
-                        class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-100 dark:bg-gray-600"
+                        class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-600 dark:text-gray-400"
                         placeholder={proxyEditors[''].host || ''}
                         disabled
                       />
@@ -189,7 +189,7 @@
                     {#if proxyEditors[scheme].scheme || scheme === ''}
                       <input
                         type="number"
-                        class="block w-24 rounded-md border border-gray-300 px-3 py-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                        class="block w-24 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                         bind:value={proxyEditors[scheme].port}
                         min="1"
                         max="65535"
@@ -200,7 +200,7 @@
                     {:else}
                       <input
                         type="number"
-                        class="block w-24 rounded-md border border-gray-300 px-3 py-2 text-sm bg-gray-100 dark:bg-gray-600"
+                        class="block w-24 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-600 dark:text-gray-400"
                         placeholder={String(proxyEditors[''].port || '')}
                         disabled
                       />

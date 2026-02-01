@@ -80,7 +80,7 @@
   {/if}
 
   <select
-    class="block w-full rounded-md border border-gray-300 pl-8 pr-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 appearance-none bg-no-repeat bg-right"
+    class="block w-full rounded-md border border-gray-300 pl-8 pr-3 py-2 text-sm shadow-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:disabled:text-gray-400 appearance-none bg-no-repeat bg-right"
     style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 24 24%27 stroke=%27%236b7280%27%3E%3Cpath stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M19 9l-7 7-7-7%27/%3E%3C/svg%3E'); background-size: 1.25rem; background-position: right 0.5rem center;"
     {disabled}
     onchange={handleChange}
