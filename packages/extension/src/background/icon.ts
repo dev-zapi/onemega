@@ -8,7 +8,8 @@
  */
 
 // Icon sizes required by Chrome extension API
-export const ICON_SIZES = [16, 19, 24, 32, 38] as const;
+// Including 128px for maximum size support
+export const ICON_SIZES = [16, 19, 24, 32, 38, 128] as const;
 export type IconSize = (typeof ICON_SIZES)[number];
 
 // Border width ratio (15% of icon size)
