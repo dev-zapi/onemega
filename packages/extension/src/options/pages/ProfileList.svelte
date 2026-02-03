@@ -100,35 +100,47 @@
       Built-in
     </h3>
     <div class="grid gap-3">
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
-            🌍
+      <!-- Direct Profile -->
+      {#if optionsStore.options}
+        {@const directProfile = optionsStore.getProfile('direct')}
+        {#if directProfile}
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
+                <ProfileIcon profile={directProfile} showEmoji={true} />
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900 dark:text-white">{t('profile_direct')}</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Direct connection</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" onclick={() => optionsStore.applyProfile('direct')}>
+              Apply
+            </Button>
           </div>
-          <div>
-            <h4 class="font-medium text-gray-900 dark:text-white">{t('profile_direct')}</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Direct connection</p>
-          </div>
-        </div>
-        <Button variant="ghost" size="sm" onclick={() => optionsStore.applyProfile('direct')}>
-          Apply
-        </Button>
-      </div>
+        {/if}
+      {/if}
 
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
-            ⚙️
+      <!-- System Profile -->
+      {#if optionsStore.options}
+        {@const systemProfile = optionsStore.getProfile('system')}
+        {#if systemProfile}
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
+                <ProfileIcon profile={systemProfile} showEmoji={true} />
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900 dark:text-white">{t('profile_system')}</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Use system proxy settings</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" onclick={() => optionsStore.applyProfile('system')}>
+              Apply
+            </Button>
           </div>
-          <div>
-            <h4 class="font-medium text-gray-900 dark:text-white">{t('profile_system')}</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Use system proxy settings</p>
-          </div>
-        </div>
-        <Button variant="ghost" size="sm" onclick={() => optionsStore.applyProfile('system')}>
-          Apply
-        </Button>
-      </div>
+        {/if}
+      {/if}
     </div>
   </div>
 

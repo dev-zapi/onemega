@@ -124,7 +124,7 @@
           onclick={() => selectProfile(profile.name)}
         >
           <div class="w-8 h-8 rounded-lg {typeColors[profile.profileType] || 'bg-gray-500'} flex items-center justify-center shadow-soft text-lg">
-            {profileEmojis[profile.profileType] || profileEmojis.FixedProfile}
+            {profile.icon || profileEmojis[profile.profileType] || profileEmojis.FixedProfile}
           </div>
           <span class="flex-1 font-medium text-gray-900 dark:text-white truncate">
             {getDisplayName(profile)}
