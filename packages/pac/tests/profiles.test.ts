@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Profiles, pacResult, nameAsKey, byName, create, match, directReferenceSet } from '../src/profiles';
+import { Profiles, pacResult, nameAsKey, byName, create, match, directReferenceSet, profileEmojis, profileTypeColors, getRandomEmoji, getDefaultColor } from '../src/profiles';
 import type { FixedProfile, SwitchProfile, RuleListProfile } from '../src/types';
 
 describe('Profiles', () => {
@@ -120,6 +120,60 @@ describe('Profiles', () => {
 
       const result2 = match(profile, { url: 'http://other.com', host: 'other.com', scheme: 'http' });
       expect(result2?.profileName).toBe('direct');
+    });
+  });
+
+  describe('profile icons and colors', () => {
+    it('should have profile emojis list', () => {
+      expect(profileEmojis).toBeDefined();
+      expect(profileEmojis.length).toBeGreaterThan(20);
+      expect(profileEmojis).toContain('🚀');
+    });
+
+    it('should have profile type colors', () => {
+      expect(profileTypeColors).toBeDefined();
+      expect(profileTypeColors['FixedProfile']).toBe('#5b9bd5');
+      expect(profileTypeColors['SwitchProfile']).toBe('#ed7d31');
+    });
+
+    it('should return random emoji from list', () => {
+      const emoji = getRandomEmoji();
+      expect(profileEmojis).toContain(emoji);
+    });
+
+    it('should return default color for profile type', () => {
+      expect(getDefaultColor('FixedProfile')).toBe('#5b9bd5');
+      expect(getDefaultColor('SwitchProfile')).toBe('#ed7d31');
+      expect(getDefaultColor('UnknownType')).toBe('#5b9bd5'); // fallback
+    });
+
+    it('should assign random emoji and color to new profiles', () => {
+      const profile = create('test', 'FixedProfile') as FixedProfile;
+      expect(profile.icon).toBeDefined();
+      expect(profileEmojis).toContain(profile.icon);
+      expect(profile.color).toBe('#5b9bd5');
+    });
+
+    it('should assign correct color based on profile type', () => {
+      const switchProfile = create('test', 'SwitchProfile') as SwitchProfile;
+      expect(switchProfile.color).toBe('#ed7d31');
+
+      const ruleListProfile = create('test', 'RuleListProfile') as RuleListProfile;
+      expect(ruleListProfile.color).toBe('#ffc000');
+    });
+
+    it('builtin profiles should have icons', () => {
+      const direct = byName('direct');
+      expect(direct?.icon).toBe('🚫');
+
+      const system = byName('system');
+      expect(system?.icon).toBe('⚙️');
+    });
+
+    it('should not override existing icon and color', () => {
+      const profile = create({ name: 'test', icon: '🎉', color: '#ff0000' }, 'FixedProfile') as FixedProfile;
+      expect(profile.icon).toBe('🎉');
+      expect(profile.color).toBe('#ff0000');
     });
   });
 });

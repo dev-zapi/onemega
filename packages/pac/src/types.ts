@@ -109,6 +109,7 @@ export interface BaseProfile {
   name: string;
   profileType: ProfileType;
   color?: string;
+  icon?: string;
   revision?: string;
 }
 

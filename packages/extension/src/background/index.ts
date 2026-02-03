@@ -2,6 +2,7 @@
 import {
   Profiles,
   generatePacScript,
+  requestFromUrl,
   type Profile,
   type OmegaOptions,
   type FixedProfile,
@@ -9,6 +10,8 @@ import {
   type SwitchProfile,
   type RuleListProfile,
 } from '@anthropic-demo/switchyalpha-pac';
+import { updateIconForProfile, getDisplayText } from './icon';
+import { initTabsListenerWithUpdate, isMatchableUrl, getAllTabs } from './tabs';
 
 console.log('ZeroOmega background service worker started');
 
@@ -93,8 +96,8 @@ async function applyProfile(name: string): Promise<void> {
     console.warn('Unknown or null profile type:', name, profile?.profileType);
   }
 
-  // Update badge
-  updateBadge(name);
+  // Update icon
+  await updateIcon(name);
 }
 
 // Apply a FixedProfile
@@ -228,14 +231,100 @@ async function applyPacProfile(profile: PacProfile): Promise<void> {
   }
 }
 
-// Update extension badge
-function updateBadge(profileName: string): void {
-  const text = profileName === 'direct' ? 'D' 
-    : profileName === 'system' ? 'S'
-    : profileName.charAt(0).toUpperCase();
-  
-  chrome.action.setBadgeText({ text });
-  chrome.action.setBadgeBackgroundColor({ color: '#4A90D9' });
+/**
+ * Get the current active profile
+ */
+function getCurrentProfile(): Profile | null {
+  if (currentProfileName === 'direct') {
+    return Profiles.builtinProfiles['+direct'];
+  }
+  if (currentProfileName === 'system') {
+    return Profiles.builtinProfiles['+system'];
+  }
+  if (options) {
+    return Profiles.byName(currentProfileName, options as unknown as Record<string, Profile>) || null;
+  }
+  return null;
+}
+
+/**
+ * Match a URL against the current profile and get the result profile
+ */
+function matchUrlToProfile(url: string): { profile: Profile; resultProfile?: Profile } | null {
+  const currentProfile = getCurrentProfile();
+  if (!currentProfile) return null;
+
+  // For non-inclusive profiles (DirectProfile, FixedProfile, SystemProfile),
+  // the result is the profile itself
+  if (!Profiles.isInclusive(currentProfile)) {
+    return { profile: currentProfile };
+  }
+
+  // For inclusive profiles (SwitchProfile, RuleListProfile), match against rules
+  try {
+    const request = requestFromUrl(url);
+    const match = Profiles.match(currentProfile, request);
+
+    if (match) {
+      // Get the result profile
+      const resultProfile = Profiles.byName(
+        match.profileName,
+        options as unknown as Record<string, Profile>
+      );
+      return {
+        profile: currentProfile,
+        resultProfile: resultProfile || undefined,
+      };
+    }
+  } catch (e) {
+    console.debug('Failed to match URL:', e);
+  }
+
+  return { profile: currentProfile };
+}
+
+/**
+ * Update the browser icon for a specific tab based on URL matching
+ */
+async function updateIconForTab(tabId: number, url: string): Promise<void> {
+  const match = matchUrlToProfile(url);
+  if (!match) return;
+
+  const { profile, resultProfile } = match;
+
+  // Get result color if there's a match to a different profile
+  const resultColor = resultProfile && resultProfile.name !== profile.name
+    ? resultProfile.color
+    : undefined;
+
+  await updateIconForProfile(profile, resultColor, tabId);
+}
+
+/**
+ * Update icons for all tabs
+ */
+async function updateAllTabsIcon(): Promise<void> {
+  const currentProfile = getCurrentProfile();
+  if (!currentProfile) return;
+
+  // Get all tabs
+  const tabs = await getAllTabs();
+
+  // Update icon for each tab
+  for (const { tabId, url } of tabs) {
+    if (isMatchableUrl(url)) {
+      await updateIconForTab(tabId, url);
+    }
+  }
+
+  // Also set the default icon (for new tabs, etc.)
+  await updateIconForProfile(currentProfile);
+}
+
+// Update extension icon (replaces old badge system)
+async function updateIcon(profileName: string): Promise<void> {
+  // Update all tab icons
+  await updateAllTabsIcon();
 }
 
 // Initialize
@@ -253,6 +342,13 @@ async function init(): Promise<void> {
   } else {
     await applyProfile(currentProfileName);
   }
+
+  // Initialize tab listeners for dynamic icon updates
+  await initTabsListenerWithUpdate((tabId, url) => {
+    updateIconForTab(tabId, url).catch((e) => {
+      console.debug('Failed to update icon for tab:', e);
+    });
+  });
 }
 
 // Listen for extension installation

@@ -4,6 +4,8 @@
   import optionsStore from '$lib/stores/options.svelte';
   import Button from '$components/ui/Button.svelte';
   import ProfileSelect from '$components/ProfileSelect.svelte';
+  import EmojiPicker from '$components/ui/EmojiPicker.svelte';
+  import ColorPicker from '$components/ui/ColorPicker.svelte';
 
   interface Props {
     profile: Profile;
@@ -11,6 +13,26 @@
   }
 
   let { profile, onback }: Props = $props();
+
+  // Profile appearance state
+  let profileIcon = $state(profile.icon || '');
+  let profileColor = $state(profile.color || '#ed7d31');
+
+  // Sync appearance state when profile changes
+  $effect(() => {
+    profileIcon = profile.icon || '';
+    profileColor = profile.color || '#ed7d31';
+  });
+
+  function handleIconChange(emoji: string) {
+    profile.icon = emoji;
+    optionsStore.setProfile(profile);
+  }
+
+  function handleColorChange(color: string) {
+    profile.color = color;
+    optionsStore.setProfile(profile);
+  }
 
   // Condition types grouped by category
   const conditionTypes = [
@@ -157,11 +179,15 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
     </button>
-    <div>
+    <div class="flex-1">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
         {profile.name}
       </h2>
       <p class="text-sm text-gray-500 dark:text-gray-400">Auto Switch Profile</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <EmojiPicker bind:value={profileIcon} onchange={handleIconChange} />
+      <ColorPicker bind:value={profileColor} onchange={handleColorChange} />
     </div>
   </div>
 

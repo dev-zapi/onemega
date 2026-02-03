@@ -32,6 +32,44 @@ export function nameAsKey(profileName: string | { name: string }): string {
 }
 
 /**
+ * Default emojis for random assignment to new profiles
+ */
+export const profileEmojis = [
+  '🚀', '🔒', '🌐', '⚡', '🎯', '🔥', '💎', '🌟', '🎨', '🔧',
+  '🛡️', '🌈', '🎭', '🎪', '🎢', '🌸', '🍀', '🌙', '☀️', '🌊',
+  '🏔️', '🌴', '🍄', '🦋', '🐉', '🦊', '🐺', '🦁', '🐯', '🦅',
+];
+
+/**
+ * Default colors for profile types
+ */
+export const profileTypeColors: Record<string, string> = {
+  DirectProfile: '#aaaaaa',
+  SystemProfile: '#333333',
+  FixedProfile: '#5b9bd5',
+  PacProfile: '#70ad47',
+  SwitchProfile: '#ed7d31',
+  VirtualProfile: '#9e7cc3',
+  RuleListProfile: '#ffc000',
+  AutoProxyRuleListProfile: '#ffc000',
+};
+
+/**
+ * Get a random emoji from the list
+ */
+export function getRandomEmoji(): string {
+  const index = Math.floor(Math.random() * profileEmojis.length);
+  return profileEmojis[index] ?? '🚀';
+}
+
+/**
+ * Get default color for a profile type
+ */
+export function getDefaultColor(profileType: string): string {
+  return profileTypeColors[profileType] ?? '#5b9bd5';
+}
+
+/**
  * Builtin profiles
  */
 export const builtinProfiles: Record<string, Profile> = {
@@ -39,11 +77,13 @@ export const builtinProfiles: Record<string, Profile> = {
     name: 'direct',
     profileType: 'DirectProfile',
     color: '#aaaaaa',
+    icon: '🚫',
   },
   '+system': {
     name: 'system',
     profileType: 'SystemProfile',
-    color: '#000000',
+    color: '#333333',
+    icon: '⚙️',
   },
 };
 
@@ -224,6 +264,16 @@ export function isInclusive(profile: Profile): boolean {
 export function create(name: string | Partial<Profile>, profileType?: ProfileType): Profile {
   const profile: Partial<Profile> =
     typeof name === 'string' ? { name, profileType } : { ...name, profileType: profileType ?? name.profileType };
+
+  // Assign random emoji if not provided
+  if (!profile.icon && profile.profileType) {
+    profile.icon = getRandomEmoji();
+  }
+
+  // Assign default color based on profile type if not provided
+  if (!profile.color && profile.profileType) {
+    profile.color = getDefaultColor(profile.profileType);
+  }
 
   switch (profile.profileType) {
     case 'FixedProfile': {
@@ -486,6 +536,10 @@ export const Profiles = {
   schemes,
   formatByType,
   ruleListFormats,
+  profileEmojis,
+  profileTypeColors,
+  getRandomEmoji,
+  getDefaultColor,
   pacResult,
   isFileUrl,
   parseHostPort,

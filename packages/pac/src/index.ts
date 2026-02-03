@@ -43,6 +43,10 @@ export {
   byKey,
   isIncludable,
   isInclusive,
+  profileEmojis,
+  profileTypeColors,
+  getRandomEmoji,
+  getDefaultColor,
 } from './profiles';
 
 // PAC Generator

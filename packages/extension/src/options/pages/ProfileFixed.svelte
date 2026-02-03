@@ -2,6 +2,8 @@
   import type { Profile, Proxy } from '@anthropic-demo/switchyalpha-pac';
   import { t } from '$lib/i18n.svelte';
   import optionsStore from '$lib/stores/options.svelte';
+  import EmojiPicker from '$components/ui/EmojiPicker.svelte';
+  import ColorPicker from '$components/ui/ColorPicker.svelte';
 
   interface Props {
     profile: Profile;
@@ -9,6 +11,26 @@
   }
 
   let { profile, onback }: Props = $props();
+
+  // Profile appearance state
+  let profileIcon = $state(profile.icon || '');
+  let profileColor = $state(profile.color || '#5b9bd5');
+
+  // Sync appearance state when profile changes
+  $effect(() => {
+    profileIcon = profile.icon || '';
+    profileColor = profile.color || '#5b9bd5';
+  });
+
+  function handleIconChange(emoji: string) {
+    profile.icon = emoji;
+    optionsStore.setProfile(profile);
+  }
+
+  function handleColorChange(color: string) {
+    profile.color = color;
+    optionsStore.setProfile(profile);
+  }
 
   // URL schemes that can have proxies
   const urlSchemes = ['', 'http', 'https', 'ftp'];
@@ -123,11 +145,15 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
     </button>
-    <div>
+    <div class="flex-1">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
         {profile.name}
       </h2>
       <p class="text-sm text-gray-500 dark:text-gray-400">Proxy Profile</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <EmojiPicker bind:value={profileIcon} onchange={handleIconChange} />
+      <ColorPicker bind:value={profileColor} onchange={handleColorChange} />
     </div>
   </div>
 

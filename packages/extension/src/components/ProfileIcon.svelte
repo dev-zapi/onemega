@@ -5,10 +5,11 @@
   interface Props {
     profile: Profile;
     size?: 'sm' | 'md' | 'lg';
+    showEmoji?: boolean;
     class?: string;
   }
 
-  let { profile, size = 'md', class: className = '' }: Props = $props();
+  let { profile, size = 'md', showEmoji = true, class: className = '' }: Props = $props();
 
   // Profile type icons (using Lucide-style SVG paths)
   const iconPaths: Record<string, string> = {
@@ -21,7 +22,7 @@
     SystemProfile: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
   };
 
-  // Profile type colors
+  // Profile type colors (for SVG fallback)
   const typeColors: Record<string, string> = {
     FixedProfile: 'text-blue-600 dark:text-blue-400',
     PacProfile: 'text-purple-600 dark:text-purple-400',
@@ -38,16 +39,34 @@
     lg: 'w-6 h-6',
   };
 
+  const emojiSizeClasses = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg',
+  };
+
   const iconPath = $derived(iconPaths[profile.profileType] || iconPaths.FixedProfile);
   const colorClass = $derived(typeColors[profile.profileType] || typeColors.FixedProfile);
+  const hasEmoji = $derived(showEmoji && profile.icon);
 </script>
 
-<svg
-  class="{sizeClasses[size]} {colorClass} {className}"
-  fill="none"
-  stroke="currentColor"
-  viewBox="0 0 24 24"
-  aria-label={t(`profile_${profile.profileType}`)}
->
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPath} />
-</svg>
+{#if hasEmoji}
+  <span
+    class="{emojiSizeClasses[size]} {className}"
+    role="img"
+    aria-label={t(`profile_${profile.profileType}`)}
+    style={profile.color ? `filter: drop-shadow(0 0 1px ${profile.color})` : ''}
+  >
+    {profile.icon}
+  </span>
+{:else}
+  <svg
+    class="{sizeClasses[size]} {colorClass} {className}"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    aria-label={t(`profile_${profile.profileType}`)}
+  >
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPath} />
+  </svg>
+{/if}
