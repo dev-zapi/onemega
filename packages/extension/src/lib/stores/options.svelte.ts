@@ -207,7 +207,10 @@ function getModifiedProfiles(): string[] {
  * Revert changes by reloading from background
  */
 async function revertChanges(): Promise<void> {
+  const savedCurrentProfile = currentProfileName;
   await init();
+  // Keep the current active profile, don't reset it during revert
+  currentProfileName = savedCurrentProfile;
 }
 
 /**
