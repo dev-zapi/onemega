@@ -112,7 +112,6 @@ export function drawIcon(options: IconOptions): ImageData {
   }
 
   const borderWidth = resultColor ? Math.round(size * BORDER_RATIO) : 0;
-  const cornerRadius = Math.round(size * CORNER_RADIUS_RATIO);
 
   // Clear canvas
   ctx.clearRect(0, 0, size, size);
@@ -120,31 +119,30 @@ export function drawIcon(options: IconOptions): ImageData {
   // Draw result color border (outer rounded rect)
   if (resultColor && borderWidth > 0) {
     ctx.fillStyle = resultColor;
-    drawRoundedRect(ctx, 0, 0, size, size, cornerRadius);
+    drawRoundedRect(ctx, 0, 0, size, size, Math.round(size * CORNER_RADIUS_RATIO));
     ctx.fill();
   }
 
-  // Draw main background (inner rounded rect)
-  const inset = borderWidth;
-  const innerSize = size - borderWidth * 2;
-  const innerRadius = Math.max(1, cornerRadius - borderWidth);
-
-  ctx.fillStyle = color;
-  drawRoundedRect(ctx, inset, inset, innerSize, innerSize, innerRadius);
-  ctx.fill();
-
-  // Draw text (emoji or letter)
+  // Draw text (emoji or letter) - fills the entire icon
   const isEmojiText = isEmoji(text);
 
-  // Calculate font size - smaller for emoji to fit well
-  const fontScale = isEmojiText ? 0.5 : 0.6;
-  const fontSize = Math.round((innerSize) * fontScale);
+  // Calculate font size to fill most of the icon
+  const fontSize = Math.round(size * 0.75);
 
   if (isEmojiText) {
     // For emoji, use system emoji font
     ctx.font = `${fontSize}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
   } else {
-    // For letters, use bold sans-serif
+    // For letters, use bold sans-serif with profile color as background
+    const cornerRadius = Math.round(size * CORNER_RADIUS_RATIO);
+    const inset = borderWidth;
+    const innerSize = size - borderWidth * 2;
+    const innerRadius = Math.max(1, cornerRadius - borderWidth);
+    
+    ctx.fillStyle = color;
+    drawRoundedRect(ctx, inset, inset, innerSize, innerSize, innerRadius);
+    ctx.fill();
+    
     ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
     ctx.fillStyle = getContrastColor(color);
   }
@@ -154,7 +152,7 @@ export function drawIcon(options: IconOptions): ImageData {
 
   // Center position (accounting for border)
   const centerX = size / 2;
-  const centerY = size / 2;
+  const centerY = size / 2 + 1; // Slight offset for better visual centering
 
   // Draw the text
   ctx.fillText(text, centerX, centerY);
