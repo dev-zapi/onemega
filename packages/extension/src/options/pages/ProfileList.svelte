@@ -59,7 +59,7 @@
   async function confirmDelete() {
     if (profileToDelete) {
       optionsStore.deleteProfile(profileToDelete.name);
-      await optionsStore.applyChanges();
+      // Don't apply immediately - let user click Apply button
     }
     closeDeleteModal();
   }

@@ -6,6 +6,7 @@
   import themeStore from '$lib/stores/theme.svelte';
   import Button from '$components/ui/Button.svelte';
   import Alert from '$components/ui/Alert.svelte';
+  import Modal from '$components/ui/Modal.svelte';
 
   interface NavItem {
     id: string;
@@ -46,6 +47,9 @@
   // Language dropdown state
   let showLangDropdown = $state(false);
 
+  // Discard confirmation modal state
+  let showDiscardModal = $state(false);
+
   onMount(() => {
     themeStore.init();
   });
@@ -59,7 +63,17 @@
   }
 
   async function handleRevert() {
+    // Show confirmation modal first
+    showDiscardModal = true;
+  }
+
+  async function confirmDiscard() {
+    showDiscardModal = false;
     await optionsStore.revertChanges();
+  }
+
+  function cancelDiscard() {
+    showDiscardModal = false;
   }
 
   function handleThemeCycle() {
@@ -212,3 +226,47 @@
     {/if}
   </main>
 </div>
+
+<!-- Discard Confirmation Modal -->
+<Modal
+  bind:open={showDiscardModal}
+  title="Discard Changes"
+  onclose={cancelDiscard}
+>
+  <div class="space-y-4">
+    <p class="text-gray-700 dark:text-gray-300">
+      Are you sure you want to discard the following changes?
+    </p>
+
+    {#if optionsStore.getModifiedProfiles().length > 0}
+      <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+        <p class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">
+          Modified profiles:
+        </p>
+        <ul class="space-y-1">
+          {#each optionsStore.getModifiedProfiles() as profileName}
+            <li class="text-sm text-amber-700 dark:text-amber-300 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+              {profileName}
+            </li>
+          {/each}
+        </ul>
+      </div>
+    {:else}
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Settings changes will be discarded.
+      </p>
+    {/if}
+  </div>
+
+  {#snippet footer()}
+    <Button variant="ghost" onclick={cancelDiscard}>
+      {t('options_cancel')}
+    </Button>
+    <Button variant="danger" onclick={confirmDiscard}>
+      {t('options_discard')}
+    </Button>
+  {/snippet}
+</Modal>

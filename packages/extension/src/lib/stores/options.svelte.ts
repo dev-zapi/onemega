@@ -10,6 +10,7 @@ import { getDependentProfiles as getDependentProfilesUtil } from '../utils/profi
 
 // Store state
 let options = $state<OmegaOptions | null>(null);
+let originalOptions = $state<OmegaOptions | null>(null);
 let currentProfileName = $state<string>('system');
 let isLoading = $state(true);
 let isDirty = $state(false);
@@ -43,15 +44,18 @@ async function init(): Promise<void> {
       const response = await chrome.runtime.sendMessage({ action: 'getOptions' });
       if (response?.options) {
         options = response.options;
+        originalOptions = JSON.parse(JSON.stringify(response.options));
         currentProfileName = response.currentProfileName || 'system';
       }
     } else {
       // Development mode - use defaults
       options = getDefaultOptions();
+      originalOptions = JSON.parse(JSON.stringify(options));
     }
   } catch (e) {
     error = e instanceof Error ? e.message : 'Failed to load options';
     options = getDefaultOptions();
+    originalOptions = JSON.parse(JSON.stringify(options));
   } finally {
     isLoading = false;
     isDirty = false;
@@ -152,12 +156,51 @@ async function applyChanges(): Promise<boolean> {
         options,
       });
     }
+    // Update originalOptions to match current state
+    originalOptions = JSON.parse(JSON.stringify(options));
     isDirty = false;
     return true;
   } catch (e) {
     error = e instanceof Error ? e.message : 'Failed to save options';
     return false;
   }
+}
+
+/**
+ * Get list of modified profile names by comparing current options with original
+ */
+function getModifiedProfiles(): string[] {
+  if (!options || !originalOptions) return [];
+
+  const modified: string[] = [];
+
+  // Get all profile keys (start with '+')
+  const currentProfileKeys = Object.keys(options).filter((key) => key.startsWith('+'));
+  const originalProfileKeys = Object.keys(originalOptions).filter((key) => key.startsWith('+'));
+
+  // Check for new or modified profiles
+  for (const key of currentProfileKeys) {
+    const currentProfile = (options as Record<string, Profile>)[key];
+    const originalProfile = (originalOptions as Record<string, Profile>)[key];
+
+    if (!originalProfile) {
+      // New profile
+      modified.push(currentProfile.name);
+    } else if (JSON.stringify(currentProfile) !== JSON.stringify(originalProfile)) {
+      // Modified profile
+      modified.push(currentProfile.name);
+    }
+  }
+
+  // Check for deleted profiles
+  for (const key of originalProfileKeys) {
+    const originalProfile = (originalOptions as Record<string, Profile>)[key];
+    if (!(key in options)) {
+      modified.push(`${originalProfile.name} (deleted)`);
+    }
+  }
+
+  return modified;
 }
 
 /**
@@ -226,6 +269,7 @@ export const optionsStore = {
   revertChanges,
   applyProfile,
   getDependentProfiles,
+  getModifiedProfiles,
 };
 
 export default optionsStore;
