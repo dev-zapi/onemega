@@ -29,9 +29,9 @@
     </label>
   {/if}
 
-  <div class="flex items-center gap-2">
+  <div class="flex items-stretch gap-2 h-10">
     <div
-      class="w-10 h-10 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+      class="w-10 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
       style="background-color: {value}"
     >
       <input
@@ -47,7 +47,7 @@
       type="text"
       {value}
       onchange={handleChange}
-      class="w-24 px-2 py-1.5 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-gray-100 uppercase"
+      class="w-24 px-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-gray-100 uppercase"
       placeholder="#000000"
       maxlength="7"
     />

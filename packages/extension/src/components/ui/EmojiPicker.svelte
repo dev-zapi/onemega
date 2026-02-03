@@ -56,7 +56,7 @@
     id={buttonId}
     type="button"
     onclick={togglePicker}
-    class="flex items-center justify-center w-12 h-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-smooth text-xl"
+    class="flex items-center justify-center w-12 h-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-smooth text-xl {value ? '' : 'text-gray-400 dark:text-gray-500 border-dashed'}"
     aria-label="Select emoji"
     aria-expanded={isOpen}
   >

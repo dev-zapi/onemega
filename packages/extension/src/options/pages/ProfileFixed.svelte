@@ -126,7 +126,7 @@
   }
 </script>
 
-<div class="max-w-4xl">
+<div class="w-full" style="max-width: 1000px;">
   <!-- Header -->
   <div class="flex items-center gap-4 mb-6">
     <button

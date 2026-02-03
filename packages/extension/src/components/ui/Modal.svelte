@@ -39,11 +39,14 @@
 <svelte:window onkeydown={handleKeydown} />
 
 {#if open}
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
     onclick={handleBackdropClick}
     transition:fade={{ duration: 200, easing: cubicOut }}
+    role="button"
+    tabindex="-1"
+    aria-label="Close modal"
   >
     <div
       class="glass dark:glass-dark rounded-xl shadow-soft-lg max-w-lg w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col {className}"
@@ -62,6 +65,7 @@
               open = false;
               onclose?.();
             }}
+            aria-label="Close"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
