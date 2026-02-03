@@ -77,7 +77,7 @@ export const builtinProfiles: Record<string, Profile> = {
     name: 'direct',
     profileType: 'DirectProfile',
     color: '#aaaaaa',
-    icon: '🚫',
+    icon: '🌍',
   },
   '+system': {
     name: 'system',
