@@ -225,6 +225,11 @@ export async function setActionIcon(
       ...(tabId !== undefined && { tabId }),
     });
   } catch (e) {
+    // Ignore "No tab with id" errors - tab may have been closed
+    const errorMessage = e instanceof Error ? e.message : String(e);
+    if (errorMessage.includes('No tab with id')) {
+      return;
+    }
     console.error('Failed to set action icon:', e);
   }
 }
