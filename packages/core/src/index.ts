@@ -1,5 +1,5 @@
 /**
- * @anthropic-demo/switchyalpha-core
+ * @dev-zapi/switchyalpha-core
  *
  * Browser-independent options and profile management for ZeroOmega.
  */
@@ -15,7 +15,7 @@ export {
   type Request,
   type Proxy,
   type ProxyAuth,
-} from '@anthropic-demo/switchyalpha-pac';
+} from '@dev-zapi/switchyalpha-pac';
 
 // Logging
 export { Log, str } from './log';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profileEmojis } from '@anthropic-demo/switchyalpha-pac';
+  import { profileEmojis } from '@dev-zapi/switchyalpha-pac';
 
   interface Props {
     value?: string;

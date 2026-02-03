@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Profile, Proxy } from '@anthropic-demo/switchyalpha-pac';
+  import type { Profile, Proxy } from '@dev-zapi/switchyalpha-pac';
   import { t } from '$lib/i18n.svelte';
   import optionsStore from '$lib/stores/options.svelte';
   import EmojiPicker from '$components/ui/EmojiPicker.svelte';

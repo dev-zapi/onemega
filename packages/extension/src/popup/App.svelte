@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { Profile } from '@anthropic-demo/switchyalpha-pac';
+  import type { Profile } from '@dev-zapi/switchyalpha-pac';
   import { t } from '$lib/i18n.svelte';
   import i18nStore from '$lib/i18n.svelte';
   import themeStore from '$lib/stores/theme.svelte';

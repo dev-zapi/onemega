@@ -1,5 +1,5 @@
 {
-  "name": "@anthropic-demo/switchyalpha-core",
+  "name": "@dev-zapi/switchyalpha-core",
   "version": "4.0.0-alpha.0",
   "private": true,
   "type": "module",
@@ -23,6 +23,6 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
-    "@anthropic-demo/switchyalpha-pac": "workspace:*"
+    "@dev-zapi/switchyalpha-pac": "workspace:*"
   }
 }

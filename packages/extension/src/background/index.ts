@@ -9,7 +9,7 @@ import {
   type PacProfile,
   type SwitchProfile,
   type RuleListProfile,
-} from '@anthropic-demo/switchyalpha-pac';
+} from '@dev-zapi/switchyalpha-pac';
 import { updateIconForProfile, getDisplayText } from './icon';
 import { initTabsListenerWithUpdate, isMatchableUrl, getAllTabs } from './tabs';
 

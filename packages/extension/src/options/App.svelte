@@ -10,7 +10,7 @@
   import ProfileSwitch from './pages/ProfileSwitch.svelte';
   import optionsStore from '$lib/stores/options.svelte';
   import i18nStore from '$lib/i18n.svelte';
-  import type { Profile, FixedProfile, SwitchProfile } from '@anthropic-demo/switchyalpha-pac';
+  import type { Profile, FixedProfile, SwitchProfile } from '@dev-zapi/switchyalpha-pac';
 
   let currentPage = $state('profiles');
   let editingProfile = $state<Profile | null>(null);

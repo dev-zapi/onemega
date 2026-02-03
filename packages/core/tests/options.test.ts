@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { Options } from '../src/options';
 import { Storage } from '../src/storage';
 import { ProfileNotExistError, NoOptionsError } from '../src/errors';
-import { Profiles } from '@anthropic-demo/switchyalpha-pac';
+import { Profiles } from '@dev-zapi/switchyalpha-pac';
 
 describe('Options', () => {
   let options: Options;
