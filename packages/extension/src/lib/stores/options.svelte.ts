@@ -15,13 +15,16 @@ let isDirty = $state(false);
 let error = $state<string | null>(null);
 
 /**
- * Get profiles array from options
+ * Get profiles array from options (excluding builtin profiles)
  */
 function getProfiles(): Profile[] {
   if (!options) return [];
   const result: Profile[] = [];
   Profiles.each(options as unknown as Record<string, Profile>, (_key, profile) => {
-    result.push(profile);
+    // Filter out builtin profiles (direct and system)
+    if (profile.profileType !== 'DirectProfile' && profile.profileType !== 'SystemProfile') {
+      result.push(profile);
+    }
   });
   return result;
 }

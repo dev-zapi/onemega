@@ -109,31 +109,6 @@
       {/each}
     </nav>
 
-    <!-- Profiles list -->
-    <div class="p-4 border-t border-gray-200/50 dark:border-gray-700/50">
-      <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-        Profiles
-      </h3>
-      <div class="space-y-0.5 max-h-48 overflow-y-auto">
-        {#each optionsStore.sortedProfiles as profile}
-          <button
-            type="button"
-            class="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-left text-gray-600 hover:bg-gray-500/10 dark:text-gray-400 dark:hover:bg-gray-500/10 transition-smooth"
-            onclick={() => navigate(`profile:${profile.name}`)}
-          >
-            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-            <span class="truncate">{profile.name}</span>
-          </button>
-        {/each}
-      </div>
-      <Button variant="ghost" size="sm" class="w-full mt-2" onclick={() => navigate('new-profile')}>
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-        {t('options_newProfile')}
-      </Button>
-    </div>
-
     <!-- Theme switcher -->
     <div class="p-4 border-t border-gray-200/50 dark:border-gray-700/50">
       <button
@@ -206,9 +181,22 @@
 
   <!-- Main content -->
   <main class="flex-1 flex flex-col overflow-hidden">
-    <!-- Top bar with actions -->
+    {#if optionsStore.error}
+      <div class="px-6 py-3">
+        <Alert type="error" dismissible>
+          {optionsStore.error}
+        </Alert>
+      </div>
+    {/if}
+
+    <!-- Page content -->
+    <div class="flex-1 overflow-y-auto p-6">
+      {@render children()}
+    </div>
+
+    <!-- Bottom bar with actions -->
     {#if optionsStore.isDirty}
-      <div class="bg-amber-500/10 border-b border-amber-500/20 px-6 py-3 flex items-center justify-between">
+      <div class="bg-amber-500/10 border-t border-amber-500/20 px-6 py-3 flex items-center justify-between">
         <span class="text-sm text-amber-700 dark:text-amber-300">
           You have unsaved changes
         </span>
@@ -222,18 +210,5 @@
         </div>
       </div>
     {/if}
-
-    {#if optionsStore.error}
-      <div class="px-6 py-3">
-        <Alert type="error" dismissible>
-          {optionsStore.error}
-        </Alert>
-      </div>
-    {/if}
-
-    <!-- Page content -->
-    <div class="flex-1 overflow-y-auto p-6">
-      {@render children()}
-    </div>
   </main>
 </div>
