@@ -199,3 +199,165 @@ describe('Chrome storage behavior', () => {
     expect(storage['+profile2']).toBeUndefined();
   });
 });
+
+describe('Circular dependency detection', () => {
+  it('should detect direct circular dependency in SwitchProfile', async () => {
+    const { getDependentProfiles } = await import('../src/lib/utils/profile-deps');
+    
+    // Initialize with profiles: A -> B (A uses B)
+    const options = {
+      '-schemaVersion': 2,
+      '+profile-a': {
+        name: 'profile-a',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: [
+          { condition: { conditionType: 'HostWildcardCondition', pattern: '*.example.com' }, profileName: 'profile-b' }
+        ]
+      },
+      '+profile-b': {
+        name: 'profile-b',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: []
+      },
+      '+profile-c': {
+        name: 'profile-c',
+        profileType: 'FixedProfile',
+        fallbackProxy: { scheme: 'http', host: '127.0.0.1', port: 8080 }
+      }
+    };
+
+    // When editing profile-b, profile-a should be excluded (A depends on B)
+    const dependents = getDependentProfiles('profile-b', options as any);
+    expect(dependents).toContain('profile-a');
+    expect(dependents).not.toContain('profile-c');
+  });
+
+  it('should detect transitive circular dependency', async () => {
+    const { getDependentProfiles } = await import('../src/lib/utils/profile-deps');
+    
+    // C -> B -> A (C uses B, B uses A)
+    const options = {
+      '-schemaVersion': 2,
+      '+profile-a': {
+        name: 'profile-a',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: []
+      },
+      '+profile-b': {
+        name: 'profile-b',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: [
+          { condition: { conditionType: 'HostWildcardCondition', pattern: '*.test.com' }, profileName: 'profile-a' }
+        ]
+      },
+      '+profile-c': {
+        name: 'profile-c',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: [
+          { condition: { conditionType: 'HostWildcardCondition', pattern: '*.example.com' }, profileName: 'profile-b' }
+        ]
+      }
+    };
+
+    // When editing profile-a, both B and C should be excluded
+    const dependents = getDependentProfiles('profile-a', options as any);
+    expect(dependents).toContain('profile-b');
+    expect(dependents).toContain('profile-c');
+  });
+
+  it('should detect dependency via defaultProfileName', async () => {
+    const { getDependentProfiles } = await import('../src/lib/utils/profile-deps');
+    
+    const options = {
+      '-schemaVersion': 2,
+      '+profile-a': {
+        name: 'profile-a',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'profile-b',  // A uses B as default
+        rules: []
+      },
+      '+profile-b': {
+        name: 'profile-b',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: []
+      }
+    };
+
+    // When editing profile-b, profile-a should be excluded
+    const dependents = getDependentProfiles('profile-b', options as any);
+    expect(dependents).toContain('profile-a');
+  });
+
+  it('should return empty array for profile with no dependents', async () => {
+    const { getDependentProfiles } = await import('../src/lib/utils/profile-deps');
+    
+    const options = {
+      '-schemaVersion': 2,
+      '+profile-a': {
+        name: 'profile-a',
+        profileType: 'FixedProfile',
+        fallbackProxy: { scheme: 'http', host: '127.0.0.1', port: 8080 }
+      },
+      '+profile-b': {
+        name: 'profile-b',
+        profileType: 'SwitchProfile',
+        defaultProfileName: 'direct',
+        rules: []
+      }
+    };
+
+    // profile-a has no dependents
+    const dependents = getDependentProfiles('profile-a', options as any);
+    expect(dependents).toHaveLength(0);
+  });
+
+  it('should detect dependencies in VirtualProfile', async () => {
+    const { getDependentProfiles } = await import('../src/lib/utils/profile-deps');
+    
+    const options = {
+      '-schemaVersion': 2,
+      '+profile-a': {
+        name: 'profile-a',
+        profileType: 'VirtualProfile',
+        defaultProfileName: 'profile-b'  // A uses B as default
+      },
+      '+profile-b': {
+        name: 'profile-b',
+        profileType: 'FixedProfile',
+        fallbackProxy: { scheme: 'http', host: '127.0.0.1', port: 8080 }
+      }
+    };
+
+    const dependents = getDependentProfiles('profile-b', options as any);
+    expect(dependents).toContain('profile-a');
+  });
+
+  it('should detect dependencies in RuleListProfile', async () => {
+    const { getDependentProfiles } = await import('../src/lib/utils/profile-deps');
+    
+    const options = {
+      '-schemaVersion': 2,
+      '+profile-a': {
+        name: 'profile-a',
+        profileType: 'RuleListProfile',
+        format: 'Switchy',
+        matchProfileName: 'profile-b',  // A uses B as match profile
+        defaultProfileName: 'direct'
+      },
+      '+profile-b': {
+        name: 'profile-b',
+        profileType: 'FixedProfile',
+        fallbackProxy: { scheme: 'http', host: '127.0.0.1', port: 8080 }
+      }
+    };
+
+    const dependents = getDependentProfiles('profile-b', options as any);
+    expect(dependents).toContain('profile-a');
+  });
+});

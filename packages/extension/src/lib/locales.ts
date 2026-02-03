@@ -1239,6 +1239,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "condition_help_TimeCondition": "Matches if the current local time is in the range defined by <b>starting hour</b> and <b>ending hour</b>, both inclusive.<br>Local time, starting hour and ending hour are all calculated in <b>24-hour</b> format (from <b>0 to 23</b>). <br>The calculation happens roughly at the moment when the request is sent.",
     "condition_WeekdayCondition": "Day of the Week",
     "condition_help_WeekdayCondition": "Matches if the <b>current day of week</b> is selected in condition details. Day is calculated according to local timezone.<br>The request and its URL don't matter to this condition. The result is solely based on the day of the week when the request is sent.",
+    "condition_BypassCondition": "Bypass List",
+    "condition_help_BypassCondition": "Matches hosts that should bypass the proxy. You can use <code>&lt;local&gt;</code> to match all local hosts (localhost, 127.0.0.1, etc.), or specify specific hosts, IP addresses, or patterns.<br>This condition is useful for defining which requests should go directly without using any proxy.",
     "condition_alert_fullUrlLimitation": "Full URL matching is no longer possible for <code>https://</code> URLs as of Chrome 52. <a href='https://github.com/FelisCatus/SwitchyOmega/wiki/Chromium-Full-URL-Limitation'>Learn more...</a>",
     "condition_alert_fullUrlLimitationLink": "https://github.com/FelisCatus/SwitchyOmega/wiki/Chromium-Full-URL-Limitation",
     "condition_group_default": " ",
@@ -1566,7 +1568,10 @@ export const translations: Record<Language, Record<string, string>> = {
     "about_help": "Other questions? Need help with using ZeroOmega? Please see our <a href='https://github.com/FelisCatus/SwitchyOmega/wiki/FAQ'>FAQ</a>.",
     "about_copyright": "Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>. All rights reserved.<br>Copyright 2024-2025 <a href='https://github.com/zero-peak/ZeroOmega/graphs/contributors'>The ZeroOmega Authors</a>.",
     "about_credits": "ZeroOmega is made possible by the <a href='https://github.com/zero-peak/ZeroOmega'>ZeroOmega</a> open source project and other <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>open source software</a>.",
-    "about_license": "ZeroOmega is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later."
+    "about_license": "ZeroOmega is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later.",
+    "options_cancel": "Cancel",
+    "options_delete": "Delete",
+    "options_ok": "OK"
   },
   "es": {
     "appNameShort": "SwitchyOmega",

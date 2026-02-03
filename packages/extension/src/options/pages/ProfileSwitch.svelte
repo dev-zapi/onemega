@@ -46,6 +46,15 @@
   let rules = $state<SwitchRule[]>([]);
   let defaultProfileName = $state('direct');
 
+  // Compute profiles that would create circular dependency
+  let excludedProfileNames = $derived(() => {
+    const dependents = optionsStore.getDependentProfiles(profile.name);
+    return [profile.name, ...dependents];
+  });
+
+  // For reactivity tracking
+  const getExcludedNames = () => excludedProfileNames();
+
   $effect(() => {
     const switchProfile = profile as any;
     rules = [...(switchProfile.rules || [])];
@@ -348,7 +357,7 @@
                 <ProfileSelect
                   profiles={optionsStore.profiles}
                   value={rule.profileName}
-                  excludeNames={[profile.name]}
+                  excludeNames={getExcludedNames()}
                   onchange={(name) => updateRuleProfile(index, name)}
                   class="w-full"
                 />
@@ -401,7 +410,7 @@
       <ProfileSelect
         profiles={optionsStore.profiles}
         value={defaultProfileName}
-        excludeNames={[profile.name]}
+        excludeNames={getExcludedNames()}
         onchange={updateDefaultProfile}
         class="w-48"
       />

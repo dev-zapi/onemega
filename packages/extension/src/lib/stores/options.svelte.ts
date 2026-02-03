@@ -6,6 +6,7 @@
 
 import type { Profile, OmegaOptions } from '@dev-zapi/switchyalpha-pac';
 import { Profiles } from '@dev-zapi/switchyalpha-pac';
+import { getDependentProfiles as getDependentProfilesUtil } from '../utils/profile-deps';
 
 // Store state
 let options = $state<OmegaOptions | null>(null);
@@ -130,6 +131,15 @@ function deleteProfile(name: string): void {
 }
 
 /**
+ * Get all profile names that depend on the given profile (including transitive dependencies)
+ * This is used to prevent circular dependencies in SwitchProfile
+ */
+function getDependentProfiles(profileName: string): string[] {
+  if (!options) return [];
+  return getDependentProfilesUtil(profileName, options);
+}
+
+/**
  * Apply changes to background
  */
 async function applyChanges(): Promise<boolean> {
@@ -215,6 +225,7 @@ export const optionsStore = {
   applyChanges,
   revertChanges,
   applyProfile,
+  getDependentProfiles,
 };
 
 export default optionsStore;
